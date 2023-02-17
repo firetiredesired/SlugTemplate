@@ -26,7 +26,13 @@ namespace SlugTemplate
             On.Player.Die += Player_Die;
             On.Lizard.ctor += Lizard_ctor;
         }
+        
+        // Load any resources, such as sprites or sounds
+        private void LoadResources(RainWorld rainWorld)
+        {
+        }
 
+        // Implement MeanLizards
         private void Lizard_ctor(On.Lizard.orig_ctor orig, Lizard self, AbstractCreature abstractCreature, World world)
         {
             orig(self, abstractCreature, world);
@@ -37,10 +43,6 @@ namespace SlugTemplate
             }
         }
 
-        // Load any resources, such as sprites or sounds
-        private void LoadResources(RainWorld rainWorld)
-        {
-        }
 
         // Implement SuperJump
         private void Player_Jump(On.Player.orig_Jump orig, Player self)

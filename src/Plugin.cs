@@ -11,9 +11,9 @@ namespace SlugTemplate
     {
         private const string MOD_ID = "author.slugtemplate";
 
-        public PlayerFeature<float> SuperJump = PlayerFloat("slugtemplate/super_jump");
-        public PlayerFeature<bool> ExplodeOnDeath = PlayerBool("slugtemplate/explode_on_death");
-        public GameFeature<float> MeanLizards = GameFloat("slugtemplate/mean_lizards");
+        public static readonly PlayerFeature<float> SuperJump = PlayerFloat("slugtemplate/super_jump");
+        public static readonly PlayerFeature<bool> ExplodeOnDeath = PlayerBool("slugtemplate/explode_on_death");
+        public static readonly GameFeature<float> MeanLizards = GameFloat("slugtemplate/mean_lizards");
 
 
         // Add hooks

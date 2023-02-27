@@ -528,6 +528,9 @@
         <member name="F:SlugBase.Features.PlayerFeatures.LoudnessMul">
             <summary>"loudness": Sound alert multiplier.</summary>
         </member>
+        <member name="F:SlugBase.Features.PlayerFeatures.BackSpear">
+            <summary>"back_spear": Store a spear on back.</summary>
+        </member>
         <member name="F:SlugBase.Features.PlayerFeatures.CommunityAlignments">
             <summary>"alignments": Initial community reputation.</summary>
         </member>
@@ -536,6 +539,15 @@
         </member>
         <member name="F:SlugBase.Features.PlayerFeatures.CustomColors">
             <summary>"custom_colors": Configurable player colors.</summary>
+        </member>
+        <member name="F:SlugBase.Features.PlayerFeatures.CanMaul">
+            <summary>"can_maul": Ability to maul creatures.</summary>
+        </member>
+        <member name="F:SlugBase.Features.PlayerFeatures.MaulDamage">
+            <summary>"maul_damage": Damage of maul attack.</summary>
+        </member>
+        <member name="F:SlugBase.Features.PlayerFeatures.MaulBlacklist">
+            <summary>"maul_blacklist": Creatures that cannot be mauled.</summary>
         </member>
         <member name="T:SlugBase.Features.GameFeatures">
             <summary>
@@ -577,6 +589,15 @@
         </member>
         <member name="F:SlugBase.Features.GameFeatures.SelectMenuSceneAscended">
             <summary>"select_menu_scene_ascended": The scene for this slugcat on the select menu when ascended.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.SleepScene">
+            <summary>"sleep_scene": The scene for this slugcat when hibernating.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.StarveScene">
+            <summary>"starve_scene": The scene for this slugcat when losing from starvation.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.DeathScene">
+            <summary>"death_scene": The scene for this slugcat when losing from a non-starvation death.</summary>
         </member>
         <member name="F:SlugBase.Features.GameFeatures.WorldState">
             <summary>"world_state": The character to use for creature spawns and room connections.</summary>
@@ -775,7 +796,7 @@
             </summary>
             <param name="data">The JSON text.</param>
             <returns>A <see cref="T:SlugBase.JsonAny"/> representing the root element.</returns>
-            <exception cref="T:SlugBase.JsonException">The root element could not be parsed.</exception>
+            <exception cref="T:SlugBase.JsonParseException">The root element could not be parsed.</exception>
         </member>
         <member name="P:SlugBase.JsonAny.Type">
             <summary>
@@ -797,14 +818,9 @@
             Values associated with integer keys.
             </summary>
         </member>
-        <member name="F:SlugBase.JsonAny.Element.Integer">
+        <member name="F:SlugBase.JsonAny.Element.Number">
             <summary>
-            An integer.
-            </summary>
-        </member>
-        <member name="F:SlugBase.JsonAny.Element.Float">
-            <summary>
-            A floating-point value.
+            A number.
             </summary>
         </member>
         <member name="F:SlugBase.JsonAny.Element.String">
@@ -985,23 +1001,13 @@
         </member>
         <member name="T:SlugBase.JsonException">
             <summary>
-            Represents errors that occur when parsing JSON.
+            Represents errors that occur when accessing JSON data.
             </summary>
         </member>
         <member name="P:SlugBase.JsonException.JsonPath">
             <summary>
             The path to the element that failed to parse, starting from the root object.
             </summary>
-        </member>
-        <member name="M:SlugBase.JsonException.#ctor">
-            <summary>Initializes a new instance of the <see cref="T:SlugBase.JsonException"/> class.</summary>
-        </member>
-        <member name="M:SlugBase.JsonException.#ctor(System.String)">
-            <summary>Initializes a new instance of the <see cref="T:SlugBase.JsonException"/> class with a specified error message.</summary>
-        </member>
-        <member name="M:SlugBase.JsonException.#ctor(System.String,System.Exception)">
-            <summary>Initializes a new instance of the <see cref="T:SlugBase.JsonException"/> class with a specified error message
-            and a reference to the inner exception that is the cause of this exception.</summary>
         </member>
         <member name="M:SlugBase.JsonException.#ctor(SlugBase.JsonAny)">
             <summary>Initializes a new instance of the <see cref="T:SlugBase.JsonException"/> class with a path to the invalid element.</summary>
@@ -1014,6 +1020,21 @@
             <summary>Initializes a new instance of the <see cref="T:SlugBase.JsonException"/> class with a specified error message,
             a reference to the inner exception that is the cause of this exception, and a path to the invalid element.</summary>
         </member>
+        <member name="T:SlugBase.JsonParseException">
+            <summary>
+            Represents errors that occur when parsing JSON data.
+            </summary>
+        </member>
+        <member name="P:SlugBase.JsonParseException.CharIndex">
+            <summary>
+            The offset in the input string that the error occurred at.
+            </summary>
+        </member>
+        <member name="P:SlugBase.JsonParseException.Line">
+            <summary>
+            The line in the input string that the error occurred at.
+            </summary>
+        </member>
         <member name="T:SlugBase.JsonRegistry`2">
             <summary>
             Represents a collection of values with unique IDs that can be loaded from JSON.
@@ -1024,6 +1045,11 @@
         <member name="E:SlugBase.JsonRegistry`2.EntryReloaded">
             <summary>
             Occurs when a loaded JSON file is modified while <see cref="P:SlugBase.JsonRegistry`2.WatchForChanges"/> is set.
+            </summary>
+        </member>
+        <member name="E:SlugBase.JsonRegistry`2.LoadFailed">
+            <summary>
+            Occurs when a JSON file fails to load or reload.
             </summary>
         </member>
         <member name="P:SlugBase.JsonRegistry`2.WatchForChanges">
@@ -1060,6 +1086,14 @@
             </summary>
             <param name="path">The file path to the json.</param>
             <returns>The registered key and value.</returns>
+        </member>
+        <member name="M:SlugBase.JsonRegistry`2.TryAddFromFile(System.String)">
+            <summary>
+            Parse a file as JSON and link it to a new <see cref="T:ExtEnum`1"/> ID.
+            Load errors can be monitored with <see cref="E:SlugBase.JsonRegistry`2.LoadFailed"/>.
+            </summary>
+            <param name="path">The file path to the json.</param>
+            <returns>The registered key and value, or <c>null</c> if loading failed.</returns>
         </member>
         <member name="M:SlugBase.JsonRegistry`2.Add(SlugBase.JsonObject)">
             <summary>
@@ -1117,6 +1151,26 @@
         <member name="P:SlugBase.JsonRegistry`2.ReloadedEventArgs.Value">
             <summary>
             The reloaded entry.
+            </summary>
+        </member>
+        <member name="T:SlugBase.JsonRegistry`2.LoadErrorEventArgs">
+            <summary>
+            Provides data for the <see cref="E:SlugBase.JsonRegistry`2.LoadFailed"/> event.
+            </summary>
+        </member>
+        <member name="P:SlugBase.JsonRegistry`2.LoadErrorEventArgs.Exception">
+            <summary>
+            The exception that caused this event, or <c>null</c> if it was not from an exception.
+            </summary>
+        </member>
+        <member name="P:SlugBase.JsonRegistry`2.LoadErrorEventArgs.ErrorMessage">
+            <summary>
+            An error message that may be shown to the user.
+            </summary>
+        </member>
+        <member name="P:SlugBase.JsonRegistry`2.LoadErrorEventArgs.Path">
+            <summary>
+            The path to the file that errored, or <c>null</c> if it was not loaded from a file.
             </summary>
         </member>
         <member name="T:SlugBase.JsonUtils">
@@ -1260,6 +1314,11 @@
             </summary>
             <param name="feature">The <see cref="T:SlugBase.Features.Feature"/> to check for.</param>
             <returns><c>true</c> if <paramref name="feature"/> was found, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SlugBase.SlugBaseCharacter.FeatureList.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through all features in this collection.
+            </summary>
         </member>
         <member name="T:SlugBase.SlugBaseCharacter.RefreshEventArgs">
             <summary>

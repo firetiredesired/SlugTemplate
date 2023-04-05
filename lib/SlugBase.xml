@@ -560,6 +560,12 @@
         <member name="F:SlugBase.Features.GameFeatures.KarmaCap">
             <summary>"karma_cap": Initial karma cap.</summary>
         </member>
+        <member name="F:SlugBase.Features.GameFeatures.TheMark">
+            <summary>"the_mark": Start with mark of communication.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.TheGlow">
+            <summary>"the_glow": Start glowing.</summary>
+        </member>
         <member name="F:SlugBase.Features.GameFeatures.StartRoom">
             <summary>"start_room": Initial room, plus backups from highest to lowest priority.</summary>
         </member>
@@ -602,6 +608,12 @@
         <member name="F:SlugBase.Features.GameFeatures.WorldState">
             <summary>"world_state": The character to use for creature spawns and room connections.</summary>
         </member>
+        <member name="F:SlugBase.Features.GameFeatures.TimelineBefore">
+            <summary>"timeline_before": The next character in the timeline.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.TimelineAfter">
+            <summary>"timeline_after": The previous character in the timeline.</summary>
+        </member>
         <member name="T:SlugBase.Features.FeatureTypes">
             <summary>
             Helper methods to construct <see cref="T:SlugBase.Features.Feature`1"/>s with simple parsing rules.
@@ -622,6 +634,9 @@
         <member name="M:SlugBase.Features.FeatureTypes.PlayerString(System.String)">
             <summary>Create a player feature that takes one string.</summary>
         </member>
+        <member name="M:SlugBase.Features.FeatureTypes.PlayerSlugcatName(System.String)">
+            <summary>Create a player feature that takes a slugcat name.</summary>
+        </member>
         <member name="M:SlugBase.Features.FeatureTypes.PlayerInts(System.String,System.Int32,System.Int32)">
             <summary>Create a player feature that takes an array of integers.</summary>
         </member>
@@ -636,6 +651,9 @@
         </member>
         <member name="M:SlugBase.Features.FeatureTypes.PlayerStrings(System.String,System.Int32,System.Int32)">
             <summary>Create a player feature that takes an array of strings.</summary>
+        </member>
+        <member name="M:SlugBase.Features.FeatureTypes.PlayerSlugcatNames(System.String,System.Int32,System.Int32)">
+            <summary>Create a player feature that takes an array of slugcat names.</summary>
         </member>
         <member name="M:SlugBase.Features.FeatureTypes.PlayerColor(System.String)">
             <summary>Create a player feature that takes a color.</summary>
@@ -667,6 +685,9 @@
         <member name="M:SlugBase.Features.FeatureTypes.GameString(System.String)">
             <summary>Create a game feature that takes one string.</summary>
         </member>
+        <member name="M:SlugBase.Features.FeatureTypes.GameSlugcatName(System.String)">
+            <summary>Create a game feature that takes a slugcat name.</summary>
+        </member>
         <member name="M:SlugBase.Features.FeatureTypes.GameInts(System.String,System.Int32,System.Int32)">
             <summary>Create a game feature that takes an array of integers.</summary>
         </member>
@@ -681,6 +702,9 @@
         </member>
         <member name="M:SlugBase.Features.FeatureTypes.GameStrings(System.String,System.Int32,System.Int32)">
             <summary>Create a game feature that takes an array of strings.</summary>
+        </member>
+        <member name="M:SlugBase.Features.FeatureTypes.GameSlugcatNames(System.String,System.Int32,System.Int32)">
+            <summary>Create a game feature that takes an array of slugcat names.</summary>
         </member>
         <member name="M:SlugBase.Features.FeatureTypes.GameColor(System.String)">
             <summary>Create a game feature that takes a color.</summary>
@@ -758,6 +782,9 @@
         <member name="M:SlugBase.JsonAny.TryBool">
             <summary>Try casting to <see cref="T:System.String"/>, returning <c>null</c> on failure.</summary>
         </member>
+        <member name="M:SlugBase.JsonAny.IsNull">
+            <summary>Test if this value is <c>null</c>.</summary>
+        </member>
         <member name="M:SlugBase.JsonAny.AsObject(SlugBase.JsonAny)">
             <summary>Cast to <see cref="T:SlugBase.JsonObject"/>.</summary>
             <exception cref="T:SlugBase.JsonException"><paramref name="json"/> isn't a JSON object.</exception>
@@ -800,7 +827,7 @@
         </member>
         <member name="P:SlugBase.JsonAny.Type">
             <summary>
-            The type of this element. This may not be <see cref="F:SlugBase.JsonAny.Element.Invalid"/>.
+            The type of this element.
             </summary>
         </member>
         <member name="T:SlugBase.JsonAny.Element">
@@ -833,9 +860,9 @@
             A boolean.
             </summary>
         </member>
-        <member name="F:SlugBase.JsonAny.Element.Invalid">
+        <member name="F:SlugBase.JsonAny.Element.Null">
             <summary>
-            A value that couldn't be parsed.
+            A <c>null</c> value.
             </summary>
         </member>
         <member name="T:SlugBase.JsonObject">
@@ -1020,6 +1047,78 @@
             <summary>Initializes a new instance of the <see cref="T:SlugBase.JsonException"/> class with a specified error message,
             a reference to the inner exception that is the cause of this exception, and a path to the invalid element.</summary>
         </member>
+        <member name="T:SlugBase.JsonConverter">
+            <summary>
+            Converts to and from JSON values.
+            </summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Create a read-only <see cref="T:SlugBase.JsonObject"/> from a copy of <paramref name="obj"/>.</summary>
+            <remarks>If <c>null</c> values are valid, use <see cref="M:SlugBase.JsonConverter.ToJsonAny(System.Object)"/> instead.</remarks>
+            <exception cref="T:System.ArgumentException">An object in <paramref name="obj"/> could not be converted to JSON.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="obj"/> was <c>null</c>.</exception>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Collections.Generic.List{System.Object})">
+            <summary>Create a read-only <see cref="T:SlugBase.JsonList"/> from a copy of <paramref name="list"/>.</summary>
+            <remarks>If <c>null</c> values are valid, use <see cref="M:SlugBase.JsonConverter.ToJsonAny(System.Object)"/> instead.</remarks>
+            <exception cref="T:System.ArgumentException">An object in <paramref name="list"/> could not be converted to JSON.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="list"/> was <c>null</c>.</exception>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.String)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.String"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Boolean)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.Boolean"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Double)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.Double"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Single)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.Single"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Int32)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.Int32"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.UInt32)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.UInt32"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Int16)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.Int16"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.UInt16)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.UInt16"/>.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.Int64)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.Int64"/>. <paramref name="value"/> is converted to a <see cref="T:System.Double"/>, so very large numbers may lose precision.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJson(System.UInt64)">
+            <summary>Create a <see cref="T:SlugBase.JsonAny"/> from a single <see cref="T:System.UInt64"/>. <paramref name="value"/> is converted to a <see cref="T:System.Double"/>, so very large numbers may lose precision.</summary>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToJsonAny(System.Object)">
+            <summary>Create a read-only <see cref="T:SlugBase.JsonAny"/> from a copy of <paramref name="value"/>.</summary>
+            <exception cref="T:System.ArgumentException">An object in the list or dictionary could not be converted to JSON.</exception>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToDictionary(SlugBase.JsonObject)">
+            <summary>
+            Create a mutable copy of a <see cref="T:SlugBase.JsonObject"/>.
+            </summary>
+            <param name="value">The <see cref="T:SlugBase.JsonObject"/> to copy.</param>
+            <returns>A copy of <paramref name="value"/> as a <see cref="T:System.Collections.Generic.Dictionary`2"/>.</returns>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToList(SlugBase.JsonList)">
+            <summary>
+            Create a mutable copy of a <see cref="T:SlugBase.JsonList"/>.
+            </summary>
+            <param name="value">The <see cref="T:SlugBase.JsonList"/> to copy.</param>
+            <returns>A copy of <paramref name="value"/> as a <see cref="T:System.Collections.Generic.List`1"/>.</returns>
+        </member>
+        <member name="M:SlugBase.JsonConverter.ToObject(SlugBase.JsonAny)">
+            <summary>
+            Create a mutable copy of a <see cref="T:SlugBase.JsonAny"/>.
+            </summary>
+            <param name="value">The <see cref="T:SlugBase.JsonAny"/> to copy.</param>
+            <returns>A copy of <paramref name="value"/> as a <see cref="T:System.Collections.Generic.List`1"/>, <see cref="T:System.Collections.Generic.Dictionary`2"/>, <see cref="T:System.String"/>, <see cref="T:System.Boolean"/>, <see cref="T:System.Double"/>, or <c>null</c>.</returns>
+        </member>
         <member name="T:SlugBase.JsonParseException">
             <summary>
             Represents errors that occur when parsing JSON data.
@@ -1196,6 +1295,9 @@
         <member name="M:SlugBase.JsonUtils.ToBool(SlugBase.JsonAny)">
             <summary>Convert to <see cref="T:System.Boolean"/>.</summary>
         </member>
+        <member name="M:SlugBase.JsonUtils.ToSlugcatName(SlugBase.JsonAny)">
+            <summary>Convert to <see cref="T:SlugcatStats.Name"/>.</summary>
+        </member>
         <member name="M:SlugBase.JsonUtils.ToColor(SlugBase.JsonAny)">
             <summary>
             Convert to <see cref="T:UnityEngine.Color"/>.
@@ -1221,6 +1323,9 @@
         </member>
         <member name="M:SlugBase.JsonUtils.ToStrings(SlugBase.JsonAny)">
             <summary>Convert list to <see cref="T:System.String"/>[].</summary>
+        </member>
+        <member name="M:SlugBase.JsonUtils.ToSlugcatNames(SlugBase.JsonAny)">
+            <summary>Convert list to <see cref="T:SlugcatStats.Name"/>[].</summary>
         </member>
         <member name="M:SlugBase.JsonUtils.ToEnum``1(SlugBase.JsonAny)">
             <summary>Convert to <see cref="T:System.Enum"/> value.</summary>
@@ -1274,6 +1379,16 @@
             <param name="name">The <see cref="T:SlugcatStats.Name"/> to search for.</param>
             <returns>The <see cref="T:SlugBase.SlugBaseCharacter"/>, or <c>null</c> if it was not found.</returns>
         </member>
+        <member name="M:SlugBase.SlugBaseCharacter.Create(System.String)">
+            <summary>
+            Creates a new, blank <see cref="T:SlugBase.SlugBaseCharacter"/>.
+            </summary>
+            <remarks>
+            Use <see cref="P:SlugBase.SlugBaseCharacter.DisplayName"/>, <see cref="P:SlugBase.SlugBaseCharacter.Description"/>, and <see cref="P:SlugBase.SlugBaseCharacter.Features"/> to customize this character.
+            </remarks>
+            <param name="id">The new character's unique ID.</param>
+            <returns>A new <see cref="T:SlugBase.SlugBaseCharacter"/> with a default name, default description, and no features.</returns>
+        </member>
         <member name="P:SlugBase.SlugBaseCharacter.Name">
             <summary>
             This character's unique name.
@@ -1307,6 +1422,29 @@
             <param name="feature">The feature to get data from.</param>
             <param name="value">The feature's data, or <typeparamref name="T"/>'s default value if it was not found.</param>
             <returns><c>true</c> if the feature was found, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SlugBase.SlugBaseCharacter.FeatureList.Set(SlugBase.Features.Feature,SlugBase.JsonAny)">
+            <summary>
+            Add a <see cref="T:SlugBase.Features.Feature"/> or replace an existing <see cref="T:SlugBase.Features.Feature"/>'s value.
+            </summary>
+            <remarks>
+            Some features are only read occasionally, such as when starting a game or entering a room.
+            Instead of modifying features during gameplay, consider defining a custom <see cref="T:SlugBase.Features.Feature`1"/> and corresponding <see cref="T:SlugBase.Features.Data`2"/>.
+            </remarks>
+            <param name="feature">The feature to add or replace.</param>
+            <param name="value">The feature's new value.</param>
+            <exception cref="T:SlugBase.JsonException"><paramref name="value"/> was not a valid value for <paramref name="feature"/>.</exception>
+        </member>
+        <member name="M:SlugBase.SlugBaseCharacter.FeatureList.Remove(SlugBase.Features.Feature)">
+            <summary>
+            Remove a <see cref="T:SlugBase.Features.Feature"/>.
+            </summary>
+            <remarks>
+            Some features are only read occasionally, such as when starting a game or entering a room.
+            Instead of modifying features during gameplay, consider defining a custom <see cref="T:SlugBase.Features.Feature`1"/> and corresponding <see cref="T:SlugBase.Features.Data`2"/>.
+            </remarks>
+            <param name="feature">The feature to remove.</param>
+            <returns><c>true</c> if the feature was present, <c>false</c> otherwise.</returns>
         </member>
         <member name="M:SlugBase.SlugBaseCharacter.FeatureList.Contains(SlugBase.Features.Feature)">
             <summary>

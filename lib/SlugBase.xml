@@ -582,7 +582,7 @@
             <summary>"cycle_length_max": Maximum cycle length in minutes.</summary>
         </member>
         <member name="F:SlugBase.Features.GameFeatures.PermaUnlockGates">
-            <summary>"perma_unlock_gates": Maximum cycle length in minutes.</summary>
+            <summary>"perma_unlock_gates": Permanently unlock gates once used.</summary>
         </member>
         <member name="F:SlugBase.Features.GameFeatures.FoodMin">
             <summary>"food_min": Food needed to sleep.</summary>
@@ -608,11 +608,23 @@
         <member name="F:SlugBase.Features.GameFeatures.WorldState">
             <summary>"world_state": The character to use for creature spawns and room connections.</summary>
         </member>
+        <member name="F:SlugBase.Features.GameFeatures.StoryRegions">
+            <summary>"story_regions": The new or removed story regions from an inherited world_state.</summary>
+        </member>
         <member name="F:SlugBase.Features.GameFeatures.TimelineBefore">
             <summary>"timeline_before": The next character in the timeline.</summary>
         </member>
         <member name="F:SlugBase.Features.GameFeatures.TimelineAfter">
             <summary>"timeline_after": The previous character in the timeline.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.TitleCard">
+            <summary>"title_card": Add a intro titlecard to be randomly selected. Must be 1366x768 pixels big to display correctly.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.ExpeditionEnabled">
+            <summary>"expedition_enabled": Enable Expedition mode for this character.</summary>
+        </member>
+        <member name="F:SlugBase.Features.GameFeatures.ExpeditionDescription">
+            <summary>"expedition_description": Character description in Expedition mode.</summary>
         </member>
         <member name="T:SlugBase.Features.FeatureTypes">
             <summary>
@@ -720,6 +732,9 @@
         </member>
         <member name="M:SlugBase.Features.FeatureTypes.GameExtEnum``1(System.String)">
             <summary>Create a game feature that takes one enum value.</summary>
+        </member>
+        <member name="P:SlugBase.Features.WorldHooks.Separator">
+            <summary>Path.DirectorySeparatorChar but shorter, because it takes too much space</summary>
         </member>
         <member name="T:SlugBase.JsonAny">
             <summary>
@@ -1345,6 +1360,54 @@
             <remarks>
             This may be a list of components or an object with "x" and "y" properties.
             </remarks>
+        </member>
+        <member name="T:SlugBase.SaveData.SaveDataExtension">
+            <summary>
+            Extensions to generate the <see cref="T:SlugBase.SaveData.SlugBaseSaveData"/> helper from the game's save data.
+            </summary>
+        </member>
+        <member name="M:SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(DeathPersistentSaveData)">
+            <summary>
+            Gets a <see cref="T:SlugBase.SaveData.SlugBaseSaveData"/> from the game's <see cref="T:DeathPersistentSaveData"/>.
+            </summary>
+            <param name="data">The <see cref="T:DeathPersistentSaveData"/> instance.</param>
+            <returns>A <see cref="T:SlugBase.SaveData.SlugBaseSaveData"/> bound to the <see cref="T:DeathPersistentSaveData"/>.</returns>
+        </member>
+        <member name="M:SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(MiscWorldSaveData)">
+            <summary>
+            Gets a <see cref="T:SlugBase.SaveData.SlugBaseSaveData"/> from the game's <see cref="T:MiscWorldSaveData"/>.
+            </summary>
+            <param name="data">The <see cref="T:MiscWorldSaveData"/> instance.</param>
+            <returns>A <see cref="T:SlugBase.SaveData.SlugBaseSaveData"/> bound to the <see cref="T:MiscWorldSaveData"/> instance.</returns>
+        </member>
+        <member name="M:SlugBase.SaveData.SaveDataExtension.GetSlugBaseData(PlayerProgression.MiscProgressionData)">
+            <summary>
+            Gets a <see cref="T:SlugBase.SaveData.SlugBaseSaveData"/> from the game's <see cref="T:PlayerProgression.MiscProgressionData"/>.
+            </summary>
+            <param name="data">The <see cref="T:PlayerProgression.MiscProgressionData"/> instance.</param>
+            <returns>A <see cref="T:SlugBase.SaveData.SlugBaseSaveData"/> bound to the <see cref="T:PlayerProgression.MiscProgressionData"/> instance.</returns>
+        </member>
+        <member name="T:SlugBase.SaveData.SlugBaseSaveData">
+            <summary>
+            A helper for interacting with the game's save data.
+            </summary>
+        </member>
+        <member name="M:SlugBase.SaveData.SlugBaseSaveData.TryGet``1(System.String,``0@)">
+            <summary>
+            Gets a value from the save data.
+            </summary>
+            <param name="key">The key for retrieving the value.</param>
+            <param name="value">The stored value.</param>
+            <typeparam name="T">The value's type.</typeparam>
+            <returns><c>true</c> if a stored value was found, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:SlugBase.SaveData.SlugBaseSaveData.Set``1(System.String,``0)">
+            <summary>
+            Sets a <see cref="T:System.Object"/> value on the save data.
+            </summary>
+            <param name="key">The key for string the value.</param>
+            <param name="value">The value to be stored.</param>
+            <typeparam name="T">The value's type.</typeparam>
         </member>
         <member name="T:SlugBase.SlugBaseCharacter">
             <summary>

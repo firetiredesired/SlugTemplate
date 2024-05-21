@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <LangVersion>11</LangVersion>
+        <DebugType>portable</DebugType>
     </PropertyGroup>
     
     <ItemGroup>
@@ -20,7 +21,7 @@
 		</ItemGroup>
 		
         <Delete Files="@(RemovePlugins)" />
-        <Copy SourceFiles="@(CopyPlugins)" DestinationFolder="../mod/plugins/" />
+        <Copy SourceFiles="@(CopyPlugins)" DestinationFolder="../mod/newest/plugins/" />
     </Target>
     
 </Project>

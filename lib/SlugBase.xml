@@ -751,7 +751,7 @@
             <summary>"death_scene": The scene for this slugcat when losing from a non-starvation death.</summary>
         </member>
         <member name="F:SlugBase.Features.GameFeatures.IntroScene">
-            <summary>"intro_scene": Add an intro scene in the style of Survivor or Gormaund.</summary>
+            <summary>"intro_scene": Add an intro scene in the style of Survivor or Gourmand.</summary>
         </member>
         <member name="F:SlugBase.Features.GameFeatures.OutroScene">
             <summary>"outro_scene": Add an outro scene for a slugbase slugcat. </summary>
@@ -946,7 +946,7 @@
             <summary>Try casting to <see cref="T:System.String"/>, returning <c>null</c> on failure.</summary>
         </member>
         <member name="M:SlugBase.JsonAny.TryBool">
-            <summary>Try casting to <see cref="T:System.String"/>, returning <c>null</c> on failure.</summary>
+            <summary>Try casting to <see cref="T:System.Boolean"/>, returning <c>null</c> on failure.</summary>
         </member>
         <member name="M:SlugBase.JsonAny.IsNull">
             <summary>Test if this value is <c>null</c>.</summary>

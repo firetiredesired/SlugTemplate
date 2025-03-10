@@ -1,14 +1,89 @@
 {
-	"id": "Prototype",
-	"name": "The Prototype",
-	"description": "A recolored copy of The Survivor that demonstrates some custom SlugBase features.<LINE>This is a template mod for SlugBase.",
+	"id": "TheKlim",
+	"name": "The Klim",
+	"description": "Klim moment",
 	"features": {
-		"color": "9cf0a4",
-		"slugtemplate/super_jump": 0.5,
-		"slugtemplate/explode_on_death": true,
-		
-		"select_menu_scene": "Slugcat_Prototype",
-		"select_menu_scene_ascended": "Ghost_Prototype",
-		"slugtemplate/mean_lizards": 0.8
+	  "color": "#ec340e",
+	  "karma": 5,
+	  "cycle_length_min": 10,
+	  "cycle_length_max": 20,
+	  "food_min": 5,
+	  "food_max": 10,
+	  "start_room": "SB_S01",
+	  "auto_grab_batflies": false,
+	  "perma_unlock_gates": false,
+	  "the_mark": true,
+	  "the_glow": true,
+	  "select_menu_scene": "Slugcat_TheKlim",
+	  "select_menu_scene_ascended": "Ghost_TheKlim",
+	  
+	  "custom_abilities": {
+		"sticky_climb": {
+		  "type": "climbing",
+		  "activation": "hold",
+		  "duration": 2.0,
+		  "cooldown": 3.0,
+		  "effects": {
+			"wall_stick": true,
+			"ceiling_stick": true,
+			"speed_multiplier": 1.5,
+			"visual_effect": "sticky_trail",
+			"sound_effect": "gentle_stick"
+		  }
+		},
+		"rapid_ascend": {
+		  "type": "movement",
+		  "activation": "tap",
+		  "speed_multiplier": 2.5,
+		  "trail_effects": ["climbing_marks", "speed_lines"],
+		  "sound_sequence": ["quick_scratch", "wall_thump"]
+		}
+	  },
+	  
+	  "ability_types": {
+		"climbing": {
+		  "base_stats": {
+			"energy_cost": 0.5,
+			"priority": 1
+		  },
+		  "allowed_effects": ["wall_stick", "ceiling_stick", "speed_multiplier", "sticky_trail"]
+		},
+		"movement": {
+		  "base_stats": {
+			"energy_cost": 0.3,
+			"priority": 2
+		  },
+		  "allowed_effects": ["speed_multiplier", "trail_effects", "sound_sequence"]
+		}
+	  },
+	  
+	  "ability_effects": {
+		"sticky_trail": {
+		  "duration": 1.0,
+		  "visual_style": "goo_trail",
+		  "physics_effect": "sticky_surface",
+		  "sound_effect": "sticky_sound"
+		},
+		"climbing_marks": {
+		  "persistence": 2.0,
+		  "visual_style": "scratch_marks",
+		  "interaction": "climb_point",
+		  "sound_effect": "scratching"
+		}
+	  },
+	  
+	  "ability_triggers": {
+		"hold": {
+		  "input_type": "button_hold",
+		  "min_duration": 0.5,
+		  "max_charge": 2.0,
+		  "charge_rate": 1.0
+		},
+		"tap": {
+		  "input_type": "button_tap",
+		  "max_per_second": 2,
+		  "priority": "high"
+		}
+	  }
 	}
-}
+  }

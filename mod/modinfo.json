@@ -1,8 +1,8 @@
 ﻿{
-	"id": "author.slugtemplate",
-	"name": "Slugcat Template",
+	"id": "Firetiredesire.TheClimb",
+	"name": "TheClimb",
 	"version": "0.1.0",
-	"authors": "Author",
+	"authors": "Firetiredesire",
 	"description": "A template for making SlugBase mods.",
 	"requirements": [ "slime-cubed.slugbase" ],
 	"requirements_names": [ "SlugBase" ],

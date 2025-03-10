@@ -1,0 +1,12 @@
+﻿{
+	"abilities": {
+	  "MyFirstAbility": {
+		"type": "Active",
+		"input": "Dash",
+		"cooldown": 30,
+		"energy_cost": 15,
+		"description": "My first custom ability"
+	  }
+	}
+	
+  }

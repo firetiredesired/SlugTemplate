@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     
     <PropertyGroup>
-        <TargetFramework>net48</TargetFramework>
-        <LangVersion>11</LangVersion>
-        <DebugType>portable</DebugType>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>11</LangVersion>
+    <DebugType>portable</DebugType>
+    <AssemblyName>TheClimb</AssemblyName>
+    <RootNamespace>TheClimb</RootNamespace>
     </PropertyGroup>
     
     <ItemGroup>

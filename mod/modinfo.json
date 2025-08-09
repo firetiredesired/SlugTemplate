@@ -1,9 +1,9 @@
 ﻿{
-	"id": "Firetiredesire.TheClimb",
-	"name": "TheClimb",
+	"id": "Firetiredesire.BountyHunter",
+	"name": "BountyHunter",
 	"version": "0.1.0",
 	"authors": "Firetiredesire",
-	"description": "A template for making SlugBase mods.",
+	"description": "A bounty hunter slugcat that gains abilities by hunting creatures in each region.",
 	"requirements": [ "slime-cubed.slugbase" ],
 	"requirements_names": [ "SlugBase" ],
 	"tags": [ "Custom Slugcat" ]

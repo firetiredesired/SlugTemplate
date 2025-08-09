@@ -4,7 +4,7 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlugTemplate", "SlugTemplate.csproj", "{6157FA1A-E8DA-15A8-E981-D763B8A24047}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheClimb", "TheClimb.csproj", "{0033FFB1-CCEB-6D65-2F73-4C4209CC7700}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BountyHunter", "BountyHunter.csproj", "{0033FFB1-CCEB-6D65-2F73-4C4209CC7700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
